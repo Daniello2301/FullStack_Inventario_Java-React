@@ -4,11 +4,15 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "inventarios")
@@ -21,43 +25,40 @@ public class Equipo implements Serializable {
     @NotEmpty(message = "Serial Requerido")
     private String serial;
 
-    @NotEmpty(messege = "Modelo Requerido")
+    @NotEmpty(message = "Modelo Requerido")
     private String modelo;
 
-    @NotEmpty(messege = "Descripcion Requerida")
+    @NotEmpty(message = "Descripcion Requerida")
     private String descripcion;
 
     private String imagen;
 
-    @NotEmpty(messege = "Precio requerido")
+    @NotEmpty(message = "Precio requerido")
     private Double precio;
 
-    @NotEmpty(message = "Fecha de compra requerida ")
-    @Column(name = "fecha_compra")
+    @Column(name = "fecha_compra", nullable = false, insertable = false, updatable = false)
     private Date fechaCompra;
 
-    @OneToOne
-    @JoinColumn(name = "usuario_id")
-    @NotEmpty(messege = "Usuario requerido")
+    @OneToOne(optional = false)
+    @JoinColumn(name = "usuario_id", nullable = false, referencedColumnName = "usuario_id", updatable = false, insertable = false)
     private Usuario usuario;
 
-    @OneToOne
-    @JoinColumn(name = "marca_id")
+    @OneToOne(optional = false)
+    @JoinColumn(name = "marca_id", nullable = false, referencedColumnName = "marca_id", updatable = false, insertable = false)
     private Marca marca;
 
-    @OneToOne
-    @JoinColumn(name = "tipo_id")
+    @OneToOne(optional = false)
+    @JoinColumn(name = "tipo_id", nullable = false, referencedColumnName = "tipo_id", updatable = false, insertable = false)
     private TipoEquipo tipo;
 
-    @OneToOne
-    @JoinColumn(name = "estado_id")
+    @OneToOne(optional = false)
+    @JoinColumn(name = "estado_id", nullable = false, referencedColumnName = "esado_id",updatable = false, insertable = false)
     private EstadoEquipo esatdo;
 
-    @Column(name = "fecha_compra")
-    @NotEmpty(message = "Fecha de creacion requerida")
+    @Column(name = "fecha_compra", nullable = false)
     private LocalDateTime fechaCreacion;
 
-    @Column(name = "fecha_actualizacion")
+    @Column(name = "fecha_actualizacion", nullable = false)
     private LocalDateTime fechaActualizacion;
 
     public Long getId() {
