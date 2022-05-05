@@ -1,0 +1,116 @@
+create database Web_inventarios
+
+use web_inventarios;
+
+
+create table tipos_equipos(
+id int not null auto_increment,
+nombre varchar(255) not null,
+estado varchar(50) not null,
+fecha_creacion datetime not null,
+fecha_actualizacion datetime not null,
+primary key(id)
+);
+
+
+create table estados_equipos(
+id int not null auto_increment,
+nombre varchar(255) not null,
+estado varchar(50) not null,
+fecha_creacion datetime not null,
+fecha_actualizacion datetime not null,
+primary key(id)
+);
+
+
+create table usuarios(
+id int not null auto_increment,
+nombre varchar(255) not null,
+email varchar(255) not null,
+estado varchar(50) not null,
+fecha_creacion datetime not null,
+fecha_actualizacion datetime not null,
+primary key(id),
+unique(email)
+);
+
+
+create table marcas(
+id int not null auto_increment,
+nombre varchar(255) not null,
+estado varchar(50) not null,
+fecha_creacion datetime not null,
+fecha_actualizacion datetime not null,
+primary key(id)
+);
+
+
+create table inventarios(
+id int not null auto_increment,
+serial varchar(255) not null,
+modelo varchar(255) not null,
+descripcion varchar(255) not null,
+foto text not null,
+precio double not null,
+fecha_compra date not null,
+usuario_id int not null,
+marca_id int not null,
+tipo_id int not null,
+estado_id int not null,
+fecha_creacion datetime not null,
+fecha_actualizacion datetime not null,
+primary key(id),
+foreign key(usuario_id) references usuarios(id),
+foreign key(marca_id) references marcas(id),
+foreign key(estado_id) references estados_equipos(id),
+foreign key(tipo_id) references tipos_equipos(id),
+unique(serial)
+);
+
+insert into tipos_equipos(nombre, estado, fecha_creacion, fecha_actualizacion) 
+values('Moviles', 'Activo', now(), now()),
+('Cocina', 'Activo', now(), now()),
+('Aseo', 'Activo', now(), now());
+
+insert into marcas(nombre, estado, fecha_creacion, fecha_actualizacion) 
+values ('Samsung', 'Activo', now(), now()),
+('LG', 'Activo', now(), now()),
+('Sony', 'Activo', now(), now()),
+('Lenovo', 'Activo', now(), now()),
+('HP', 'Activo', now(), now()), 
+('Casio', 'Inactivo', now(), now()), 
+('CARTON Y ESTIBA', 'Inactivo', now(), now()),
+('Apple', 'Inactivo', now(), now());
+		
+select * from marcas
+
+
+-- estados_equipos
+
+insert into estados_equipos(nombre, estado, fecha_creacion, fecha_actualizacion) 
+values ('En uso', 'Activo', now(), now()),
+('Depreciado', 'Activo', now(), now()),
+('En Bodega', 'Activo', now(), now()),
+('En reparación', 'Activo', now(), now()),
+('Perdido', 'Activo', now(), now());
+
+
+-- Usuarios
+
+insert into usuarios(nombre, email, estado, fecha_creacion, fecha_actualizacion) 
+values ('Adrian', 'adrian@gmail.com', 'Activo', now(), now()),
+ ('Pedro', 'pedro@gmail.com', 'Activo', now(), now()),
+ ('Elena', 'elena@gmail.com', 'Activo', now(), now()),
+ ('Julio', 'julio@gmail.com', 'Activo', now(), now()),
+ ('Andrea', 'andrea@gmail.com', 'Activo', now(), now());
+
+select * from usuarios u 
+insert into inventarios(serial, modelo, descripcion, foto, fecha_compra, precio, usuario_id, marca_id, tipo_id, estado_id, fecha_creacion, fecha_actualizacion) 
+values ('1245A', 'XCFG', 'Portatil core i5', 'https://mifoto.com', '2022-01-01', 2300000, 1, 4, 1, 1, now(), now()),
+('1245B', 'XCFK', 'Pantalla 24 Pulgadas', 'https://mifoto.com', '2021-12-01', 850000, 1, 4, 1, 1, now(), now()),
+('1247XZ', 'XCFIO', 'Computador escritorio todo en uno', 'https://mifoto.com', '2022-02-28', 3620000, 5, 5, 3, 1, now(), now()),
+('1245XX', 'ER 100S 4E V1', 'Estiba Plastica Er 100s 4e V1', 'https://mifoto.com', '2022-03-12', 259800, 2, 7, 1, 5, now(), now()),
+('ZXSD', 'RRSS B21', 'Iphon 12', 'https://mifoto.com', '2022-04-19', 7850000, 3, 8, 2, 4, now(), now());
+
+select * from inventarios i 
+-- Listar los activos de marca Lenovo y mostrar en la consulta, nombre de usuario, marca, tipo y estado respectivamente. 
