@@ -18,28 +18,46 @@ public class Equipo implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty(message = "Serial Requerido")
     private String serial;
 
+    @NotEmpty(messege = "Modelo Requerido")
     private String modelo;
 
+    @NotEmpty(messege = "Descripcion Requerida")
     private String descripcion;
 
     private String imagen;
 
+    @NotEmpty(messege = "Precio requerido")
     private Double precio;
 
+    @NotEmpty(message = "Fecha de compra requerida ")
+    @Column(name = "fecha_compra")
     private Date fechaCompra;
 
+    @OneToOne
+    @JoinColumn(name = "usuario_id")
+    @NotEmpty(messege = "Usuario requerido")
     private Usuario usuario;
 
+    @OneToOne
+    @JoinColumn(name = "marca_id")
     private Marca marca;
 
+    @OneToOne
+    @JoinColumn(name = "tipo_id")
     private TipoEquipo tipo;
 
+    @OneToOne
+    @JoinColumn(name = "estado_id")
     private EstadoEquipo esatdo;
 
+    @Column(name = "fecha_compra")
+    @NotEmpty(message = "Fecha de creacion requerida")
     private LocalDateTime fechaCreacion;
 
+    @Column(name = "fecha_actualizacion")
     private LocalDateTime fechaActualizacion;
 
     public Long getId() {
