@@ -84,7 +84,7 @@ public class TipoEquipoImp implements ITipoService {
 
         TipoEquipo tipoGuardado = tipoRepository.save(tipo);
 
-        tipo.setId(tipoGuardado.getId());
+        tipoEquiDto.setId(tipoGuardado.getId());
 
         return tipoEquiDto;
     }
