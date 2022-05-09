@@ -125,9 +125,10 @@ public class EquipoImplement implements IEquipoService{
         equipo.setDescripcion(equipoDto.getDescripcion());
         equipo.setFoto(equipoDto.getImagen());
         equipo.setFechaCompra(equipoDto.getFechaCompra());
+        equipo.setFechaCreacion(equipoDto.getFechaCreacion());
+        equipo.setFechaActualizacion(equipoDto.getFechaActualizacion());
 
-        Optional<Usuario> usuario = 
-                usuarioRepository.findById(equipoDto.getUsuarioId()); 
+        Optional<Usuario> usuario = usuarioRepository.findById(equipoDto.getUsuarioId()); 
                 if(!usuario.isPresent()){ return null; }
         equipo.setUsuarioId(usuario.get());
 
@@ -135,14 +136,17 @@ public class EquipoImplement implements IEquipoService{
                 marcaRepository.findById(equipoDto.getMarcaId());
                 if(!marca.isPresent()){return null;}
         equipo.setMarcaId(marca.get());
+        
         Optional<TipoEquipo> tipo =
                 tipoRepository.findById(equipoDto.getTipoId());
                 if(!tipo.isPresent()){ return null; }
         equipo.setTipoId(tipo.get());
+
         Optional<EstadoEquipo> estado = 
                 estadoRepository.findById(equipoDto.getEstadoId());
                 if(!estado.isPresent()){ return null; }
         equipo.setEstadoId(estado.get());
+
 
         Equipo equipoGuardado = equipoRepository.save(equipo);
         

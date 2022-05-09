@@ -1,7 +1,6 @@
 package co.iudigital.backend_inventario.dto;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -33,8 +32,10 @@ public class EquipoDto {
     @JsonProperty("estado_id")
     private Long estadoId;
 
+    @JsonProperty("fechaCreacion")
     private LocalDate fechaCreacion;
-
+    
+    @JsonProperty("fechaActualizacion")
     private LocalDate fechaActualizacion;
 
     public Long getId() {
