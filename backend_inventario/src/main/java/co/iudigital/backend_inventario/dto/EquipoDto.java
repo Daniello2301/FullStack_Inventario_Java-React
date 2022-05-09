@@ -1,7 +1,7 @@
 package co.iudigital.backend_inventario.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -19,19 +19,19 @@ public class EquipoDto {
 
     private Double precio;
 
-    private Date fechaCompra;
+    private LocalDate fechaCompra;
 
-    @JsonProperty("usuario")
-    private String usuario;
+    @JsonProperty("usuario_id")
+    private Long usuarioId;
 
-    @JsonProperty("marca")
-    private String marca;
+    @JsonProperty("marca_id")
+    private Long marcaId;
 
-    @JsonProperty("marca")
-    private String tipo;
+    @JsonProperty("tipo_id")
+    private Long tipoId;
 
-    @JsonProperty("estado")
-    private String estado;
+    @JsonProperty("estado_id")
+    private Long estadoId;
 
     private LocalDateTime fechaCreacion;
 
@@ -85,44 +85,44 @@ public class EquipoDto {
         this.precio = precio;
     }
 
-    public Date getFechaCompra() {
+    public LocalDate getFechaCompra() {
         return fechaCompra;
     }
 
-    public void setFechaCompra(Date fechaCompra) {
+    public void setFechaCompra(LocalDate fechaCompra) {
         this.fechaCompra = fechaCompra;
     }
-
-    public String getUsuario() {
-        return usuario;
+    
+    public Long getUsuarioId() {
+        return usuarioId;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setUsuarioId(Long usuarioId) {
+        this.usuarioId = usuarioId;
     }
 
-    public String getMarca() {
-        return marca;
+    public Long getMarcaId() {
+        return marcaId;
     }
 
-    public void setMarca(String marca) {
-        this.marca = marca;
+    public void setMarcaId(Long marcaId) {
+        this.marcaId = marcaId;
     }
 
-    public String getTipo() {
-        return tipo;
+    public Long getTipoId() {
+        return tipoId;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setTipoId(Long tipoId) {
+        this.tipoId = tipoId;
     }
 
-    public String getEstado() {
-        return estado;
+    public Long getEstadoId() {
+        return estadoId;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setEstadoId(Long estadoId) {
+        this.estadoId = estadoId;
     }
 
     public LocalDateTime getFechaCreacion() {
