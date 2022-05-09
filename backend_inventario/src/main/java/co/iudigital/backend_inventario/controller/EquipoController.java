@@ -48,6 +48,11 @@ public class EquipoController {
     }
 
 
+
+
+
+
+
     @GetMapping("/{id}")
     public ResponseEntity<EquipoDto> getById(@PathVariable Long id) throws RestException
     {
@@ -56,6 +61,13 @@ public class EquipoController {
         
         return ResponseEntity.ok().body(response);
     }
+
+
+
+
+
+
+
 
 
 
@@ -88,6 +100,12 @@ public class EquipoController {
 					);
         }
     }
+
+
+
+
+
+
 
 
     @DeleteMapping("/{id}")

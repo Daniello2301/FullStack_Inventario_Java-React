@@ -33,9 +33,9 @@ public class EquipoDto {
     @JsonProperty("estado_id")
     private Long estadoId;
 
-    private LocalDateTime fechaCreacion;
+    private LocalDate fechaCreacion;
 
-    private LocalDateTime fechaActualizacion;
+    private LocalDate fechaActualizacion;
 
     public Long getId() {
         return id;
@@ -125,19 +125,19 @@ public class EquipoDto {
         this.estadoId = estadoId;
     }
 
-    public LocalDateTime getFechaCreacion() {
+    public LocalDate getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(LocalDateTime fechaCreacion) {
+    public void setFechaCreacion(LocalDate fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public LocalDateTime getFechaActualizacion() {
+    public LocalDate getFechaActualizacion() {
         return fechaActualizacion;
     }
 
-    public void setFechaActualizacion(LocalDateTime fechaActualizacion) {
+    public void setFechaActualizacion(LocalDate fechaActualizacion) {
         this.fechaActualizacion = fechaActualizacion;
     }
 

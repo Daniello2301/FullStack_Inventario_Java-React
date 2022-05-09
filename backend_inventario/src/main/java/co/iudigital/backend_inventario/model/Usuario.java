@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "usuarios")
@@ -19,17 +18,12 @@ public class Usuario implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "Nombre requerido")
     private String nombre;
 
-    @Column(unique = true)
-    @NotEmpty(message = "Email requerido")
     private String email;
-
-    @NotEmpty(message = "Contraseña requerida")
+   
     private String contrasena;
-
-    @NotEmpty(message = "Estado requerido")
+    
     private String estado;
 
     @Column(name = "fecha_creacion")

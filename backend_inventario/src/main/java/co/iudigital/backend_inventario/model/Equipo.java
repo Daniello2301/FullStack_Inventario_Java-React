@@ -2,8 +2,8 @@ package co.iudigital.backend_inventario.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "equipos")
@@ -22,47 +21,40 @@ public class Equipo implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Serial requerido")
     private String serial;
 
-    @NotNull(message = "Modelo requerido")
     private String modelo;
 
-    @NotNull(message = "Descripcion requerida")
     private String descripcion;
 
-    @NotNull
     private String foto;
 
-    @NotNull
     private Double precio;
 
     @Column(name = "fecha_compra")
     private LocalDate fechaCompra;
 
-    @OneToOne
-    @JoinColumn(name = "usuario_id", nullable = false)
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "usuario_id")
     private Usuario usuarioId;
 
-    @OneToOne
-    @JoinColumn(name = "marca_id", nullable = false)
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "marca_id")
     private Marca marcaId;
 
-    @OneToOne
-    @JoinColumn(name = "tipo_id", nullable = false)
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "tipo_id")
     private TipoEquipo tipoId;
 
-    @OneToOne
-    @JoinColumn(name = "estado_id", nullable = false)
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "estado_id")
     private EstadoEquipo estadoId;
-
-    @NotNull
+ 
     @Column(name = "fecha_creacion")
-    private LocalDateTime fechaCreacion;
+    private LocalDate fechaCreacion;
 
-    @NotNull
     @Column(name = "fecha_actualizacion")
-    private LocalDateTime fechaActualizacion;
+    private LocalDate fechaActualizacion;
 
     public Long getId() {
         return id;
@@ -152,19 +144,19 @@ public class Equipo implements Serializable{
         this.estadoId = estadoId;
     }
 
-    public LocalDateTime getFechaCreacion() {
+    public LocalDate getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(LocalDateTime fechaCreacion) {
+    public void setFechaCreacion(LocalDate fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public LocalDateTime getFechaActualizacion() {
+    public LocalDate getFechaActualizacion() {
         return fechaActualizacion;
     }
 
-    public void setFechaActualizacion(LocalDateTime fechaActualizacion) {
+    public void setFechaActualizacion(LocalDate fechaActualizacion) {
         this.fechaActualizacion = fechaActualizacion;
     }
 

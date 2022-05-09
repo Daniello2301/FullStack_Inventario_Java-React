@@ -125,10 +125,12 @@ public class EquipoImplement implements IEquipoService{
         equipo.setDescripcion(equipoDto.getDescripcion());
         equipo.setFoto(equipoDto.getImagen());
         equipo.setFechaCompra(equipoDto.getFechaCompra());
+
         Optional<Usuario> usuario = 
                 usuarioRepository.findById(equipoDto.getUsuarioId()); 
                 if(!usuario.isPresent()){ return null; }
         equipo.setUsuarioId(usuario.get());
+
         Optional<Marca> marca =
                 marcaRepository.findById(equipoDto.getMarcaId());
                 if(!marca.isPresent()){return null;}
@@ -150,7 +152,8 @@ public class EquipoImplement implements IEquipoService{
     }
 
     @Override
-    public void deleteById(long id) throws RestException {
+    @Transactional
+    public void deleteById(long id){
         
         equipoRepository.deleteById(id);
         
