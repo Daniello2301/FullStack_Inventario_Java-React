@@ -32,10 +32,8 @@ public class EquipoDto {
     @JsonProperty("estado_id")
     private Long estadoId;
 
-    @JsonProperty("fechaCreacion")
     private LocalDate fechaCreacion;
     
-    @JsonProperty("fechaActualizacion")
     private LocalDate fechaActualizacion;
 
     public Long getId() {

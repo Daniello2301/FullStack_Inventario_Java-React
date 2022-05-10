@@ -13,5 +13,5 @@ public interface IEstadoService {
 
     public EstadoEquiDto save(EstadoEquiDto estadoDto) throws RestException;
 
-    public void deleteById(Long id) throws RestException;
+    public void deleteById(Long id);
 }

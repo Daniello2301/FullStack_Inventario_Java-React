@@ -84,7 +84,7 @@ public class EstadoEquipoImp implements IEstadoService {
         estado.setNombre(estadoDto.getNombre());
         estado.setEstado(estadoDto.getEstado());
         estado.setFechaCreacion(estadoDto.getFechaCreacion());
-        estado.setFechaActualizacion(estado.getFechaActualizacion());
+        estado.setFechaActualizacion(estadoDto.getFechaActualizacion());
 
         EstadoEquipo estadoGuardado = estadoRepository.save(estado);
 
@@ -94,7 +94,8 @@ public class EstadoEquipoImp implements IEstadoService {
     }
 
     @Override
-    public void deleteById(Long id) throws RestException {
+    @Transactional
+    public void deleteById(Long id){
         
         estadoRepository.deleteById(id);
         

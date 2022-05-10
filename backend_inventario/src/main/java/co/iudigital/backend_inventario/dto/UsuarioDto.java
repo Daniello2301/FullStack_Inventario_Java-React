@@ -1,5 +1,6 @@
 package co.iudigital.backend_inventario.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class UsuarioDto {
@@ -14,9 +15,9 @@ public class UsuarioDto {
 
     private String estado;
 
-    private LocalDateTime fechaCreacion;
+    private LocalDate fechaCreacion;
 
-    private LocalDateTime fechaActualizacion;
+    private LocalDate fechaActualizacion;
 
     public Long getId() {
         return id;
@@ -58,19 +59,19 @@ public class UsuarioDto {
         this.estado = estado;
     }
 
-    public LocalDateTime getFechaCreacion() {
+    public LocalDate getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(LocalDateTime fechaCreacion) {
+    public void setFechaCreacion(LocalDate fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public LocalDateTime getFechaActualizacion() {
+    public LocalDate getFechaActualizacion() {
         return fechaActualizacion;
     }
 
-    public void setFechaActualizacion(LocalDateTime fechaActualizacion) {
+    public void setFechaActualizacion(LocalDate fechaActualizacion) {
         this.fechaActualizacion = fechaActualizacion;
     }
 

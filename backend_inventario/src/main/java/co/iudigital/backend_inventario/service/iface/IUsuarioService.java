@@ -13,5 +13,5 @@ public interface IUsuarioService {
 
     public UsuarioDto save(UsuarioDto usuarioDto) throws RestException;
 
-    public void deleteById(Long id) throws RestException;
+    public void deleteById(Long id);
 }

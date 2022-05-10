@@ -96,7 +96,8 @@ public class MarcaImp implements IMarcaService {
     }
 
     @Override
-    public void deleteById(Long id) throws RestException {
+    @Transactional
+    public void deleteById(Long id){
         
         marcaRepository.deleteById(id);
         

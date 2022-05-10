@@ -14,5 +14,5 @@ public interface IMarcaService {
 
     public MarcaDto save(MarcaDto marcaDto) throws RestException;
 
-    public void deleteById(Long id) throws RestException;
+    public void deleteById(Long id);
 }

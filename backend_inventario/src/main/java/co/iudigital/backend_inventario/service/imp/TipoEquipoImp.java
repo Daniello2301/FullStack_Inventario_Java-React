@@ -91,7 +91,7 @@ public class TipoEquipoImp implements ITipoService {
 
     @Override
     @Transactional
-    public void deleteById(Long id) throws RestException {
+    public void deleteById(Long id) {
         
         tipoRepository.deleteById(id);
         

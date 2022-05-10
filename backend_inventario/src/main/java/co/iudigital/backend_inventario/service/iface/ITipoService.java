@@ -13,5 +13,5 @@ public interface ITipoService {
 
     public TipoEquiDto save(TipoEquiDto tipoEquiDto) throws RestException;
 
-    public void deleteById(Long id) throws RestException;
+    public void deleteById(Long id);
 }

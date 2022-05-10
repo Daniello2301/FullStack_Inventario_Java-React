@@ -3,7 +3,6 @@ package co.iudigital.backend_inventario.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,21 +33,21 @@ public class Equipo implements Serializable{
     @Column(name = "fecha_compra")
     private LocalDate fechaCompra;
 
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne
     @JoinColumn(name = "usuario_id")
-    private Usuario usuarioId;
+    private Usuario usuario;
 
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne
     @JoinColumn(name = "marca_id")
-    private Marca marcaId;
+    private Marca marca;
 
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne
     @JoinColumn(name = "tipo_id")
-    private TipoEquipo tipoId;
+    private TipoEquipo tipo;
 
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne
     @JoinColumn(name = "estado_id")
-    private EstadoEquipo estadoId;
+    private EstadoEquipo estado;
  
     @Column(name = "fecha_creacion")
     private LocalDate fechaCreacion;
@@ -112,36 +111,36 @@ public class Equipo implements Serializable{
         this.fechaCompra = fechaCompra;
     }
 
-    public Usuario getUsuarioId() {
-        return usuarioId;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setUsuarioId(Usuario usuarioId) {
-        this.usuarioId = usuarioId;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
-    public Marca getMarcaId() {
-        return marcaId;
+    public Marca getMarca() {
+        return marca;
     }
 
-    public void setMarcaId(Marca marcaId) {
-        this.marcaId = marcaId;
+    public void setMarca(Marca marca) {
+        this.marca = marca;
     }
 
-    public TipoEquipo getTipoId() {
-        return tipoId;
+    public TipoEquipo getTipo() {
+        return tipo;
     }
 
-    public void setTipoId(TipoEquipo tipoId) {
-        this.tipoId = tipoId;
+    public void setTipo(TipoEquipo tipo) {
+        this.tipo = tipo;
     }
 
-    public EstadoEquipo getEstadoId() {
-        return estadoId;
+    public EstadoEquipo getEstado() {
+        return estado;
     }
 
-    public void setEstadoId(EstadoEquipo estadoId) {
-        this.estadoId = estadoId;
+    public void setEstado(EstadoEquipo estado) {
+        this.estado = estado;
     }
 
     public LocalDate getFechaCreacion() {

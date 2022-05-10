@@ -1,5 +1,6 @@
 package co.iudigital.backend_inventario.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class TipoEquiDto {
@@ -10,9 +11,9 @@ public class TipoEquiDto {
 
     private String estado;
 
-    private LocalDateTime fechaCreacion;
+    private LocalDate fechaCreacion;
 
-    private LocalDateTime fechasActualizacion;
+    private LocalDate fechasActualizacion;
 
     public Long getId() {
         return id;
@@ -38,19 +39,19 @@ public class TipoEquiDto {
         this.estado = estado;
     }
 
-    public LocalDateTime getFechaCreacion() {
+    public LocalDate getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(LocalDateTime fechaCreacion) {
+    public void setFechaCreacion(LocalDate fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public LocalDateTime getFechasActualizacion() {
+    public LocalDate getFechasActualizacion() {
         return fechasActualizacion;
     }
 
-    public void setFechasActualizacion(LocalDateTime fechasActualizacion) {
+    public void setFechasActualizacion(LocalDate fechasActualizacion) {
         this.fechasActualizacion = fechasActualizacion;
     }
 

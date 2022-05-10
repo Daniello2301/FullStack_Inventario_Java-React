@@ -17,7 +17,7 @@ import co.iudigital.backend_inventario.repository.IUsuarioRepository;
 import co.iudigital.backend_inventario.service.iface.IUsuarioService;
 
 @Service
-public class UsuarioImp  implements IUsuarioService{
+public class UsuarioImp implements IUsuarioService {
 
     @Autowired
     private IUsuarioRepository usuarioRepository;
@@ -25,28 +25,27 @@ public class UsuarioImp  implements IUsuarioService{
     @Override
     @Transactional(readOnly = true)
     public List<UsuarioDto> getAll() throws RestException {
-        
+
         List<Usuario> usuarios = usuarioRepository.findAll();
-    
-        if(usuarios == null)
-        {
+
+        if (usuarios == null) {
             throw new NotFoundException(
-                ErrorDto.getErrorDto(
-                    HttpStatus.NOT_FOUND.getReasonPhrase(), 
-                    "NO se encontró", 
-                    HttpStatus.NOT_FOUND.value())
-            );
+                    ErrorDto.getErrorDto(
+                            HttpStatus.NOT_FOUND.getReasonPhrase(),
+                            "NO se encontró",
+                            HttpStatus.NOT_FOUND.value()));
         }
-    
+
         List<UsuarioDto> usuariosDto = new ArrayList<>();
 
-        for(Usuario usuario: usuarios)
-        {
+        for (Usuario usuario : usuarios) {
             UsuarioDto usuarioDto = new UsuarioDto();
 
             usuarioDto.setId(usuario.getId());
             usuarioDto.setNombre(usuario.getNombre());
             usuarioDto.setEstado(usuario.getEstado());
+            usuarioDto.setEmail(usuario.getEmail());
+            usuarioDto.setContrasena(usuario.getContrasena());
             usuarioDto.setFechaCreacion(usuario.getFechaCreacion());
             usuarioDto.setFechaActualizacion(usuario.getFechaActualizacion());
 
@@ -55,18 +54,19 @@ public class UsuarioImp  implements IUsuarioService{
         return usuariosDto;
     }
 
-
     @Override
     @Transactional(readOnly = true)
     public UsuarioDto getById(Long id) throws RestException {
-        
+
         Usuario usuario = usuarioRepository.findById(id).orElse(null);
 
         UsuarioDto usuarioDto = new UsuarioDto();
 
-        usuarioDto.setId(usuario.getId()); 
+        usuarioDto.setId(usuario.getId());
         usuarioDto.setNombre(usuario.getNombre());
         usuarioDto.setEstado(usuario.getEstado());
+        usuarioDto.setEmail(usuario.getEmail());
+        usuarioDto.setContrasena(usuario.getContrasena());
         usuarioDto.setFechaCreacion(usuario.getFechaCreacion());
         usuarioDto.setFechaActualizacion(usuario.getFechaActualizacion());
 
@@ -76,11 +76,13 @@ public class UsuarioImp  implements IUsuarioService{
     @Override
     @Transactional
     public UsuarioDto save(UsuarioDto usuarioDto) throws RestException {
-        
+
         Usuario usuario = new Usuario();
 
         usuario.setNombre(usuarioDto.getNombre());
         usuario.setEstado(usuarioDto.getEstado());
+        usuario.setEmail(usuarioDto.getEmail());
+        usuario.setContrasena(usuarioDto.getContrasena());
         usuario.setFechaCreacion(usuarioDto.getFechaCreacion());
         usuario.setFechaActualizacion(usuarioDto.getFechaActualizacion());
 
@@ -92,10 +94,11 @@ public class UsuarioImp  implements IUsuarioService{
     }
 
     @Override
-    public void deleteById(Long id) throws RestException {
-        
+    @Transactional
+    public void deleteById(Long id) {
+
         usuarioRepository.deleteById(id);
-        
+
     }
-    
+
 }

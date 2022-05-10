@@ -72,10 +72,10 @@ public class EquipoImplement implements IEquipoService{
             equipoDto.setDescripcion(equipo.getDescripcion());
             equipoDto.setImagen(equipo.getFoto());
             equipoDto.setFechaCompra(equipo.getFechaCompra());
-            equipoDto.setUsuarioId(equipo.getUsuarioId().getId());
-            equipoDto.setMarcaId(equipo.getMarcaId().getId());
-            equipoDto.setTipoId(equipo.getTipoId().getId());
-            equipoDto.setEstadoId(equipo.getEstadoId().getId());
+            equipoDto.setUsuarioId(equipo.getUsuario().getId());
+            equipoDto.setMarcaId(equipo.getMarca().getId());
+            equipoDto.setTipoId(equipo.getTipo().getId());
+            equipoDto.setEstadoId(equipo.getEstado().getId());
             equipoDto.setFechaCreacion(equipo.getFechaCreacion());
             equipoDto.setFechaActualizacion(equipo.getFechaActualizacion());
 
@@ -100,10 +100,10 @@ public class EquipoImplement implements IEquipoService{
         equipoDto.setDescripcion(equipo.getDescripcion());
         equipoDto.setImagen(equipo.getFoto());
         equipoDto.setFechaCompra(equipo.getFechaCompra());
-        equipoDto.setUsuarioId(equipo.getUsuarioId().getId());
-        equipoDto.setMarcaId(equipo.getMarcaId().getId());
-        equipoDto.setTipoId(equipo.getTipoId().getId());
-        equipoDto.setEstadoId(equipo.getEstadoId().getId());
+        equipoDto.setUsuarioId(equipo.getUsuario().getId());
+        equipoDto.setMarcaId(equipo.getMarca().getId());
+        equipoDto.setTipoId(equipo.getTipo().getId());
+        equipoDto.setEstadoId(equipo.getEstado().getId());
         equipoDto.setFechaCreacion(equipo.getFechaCreacion());
         equipoDto.setFechaActualizacion(equipo.getFechaActualizacion());
 
@@ -124,28 +124,31 @@ public class EquipoImplement implements IEquipoService{
         equipo.setModelo(equipoDto.getModelo());
         equipo.setDescripcion(equipoDto.getDescripcion());
         equipo.setFoto(equipoDto.getImagen());
+        equipo.setPrecio(equipoDto.getPrecio());
         equipo.setFechaCompra(equipoDto.getFechaCompra());
+
+        Optional<Usuario> usuario = usuarioRepository.findById(equipoDto.getUsuarioId());
+
+                if(!usuario.isPresent()){ return null; }
+        equipo.setUsuario(usuario.get());
+
+        Optional<Marca> marca = marcaRepository.findById(equipoDto.getMarcaId());
+
+                if(!marca.isPresent()){return null;}
+        equipo.setMarca(marca.get());
+        
+        Optional<TipoEquipo> tipo = tipoRepository.findById(equipoDto.getTipoId());
+
+                if(!tipo.isPresent()){ return null; }
+        equipo.setTipo(tipo.get());
+
+        Optional<EstadoEquipo> estado = estadoRepository.findById(equipoDto.getEstadoId());
+
+                if(!estado.isPresent()){ return null; }
+        equipo.setEstado(estado.get());
+        
         equipo.setFechaCreacion(equipoDto.getFechaCreacion());
         equipo.setFechaActualizacion(equipoDto.getFechaActualizacion());
-
-        Optional<Usuario> usuario = usuarioRepository.findById(equipoDto.getUsuarioId()); 
-                if(!usuario.isPresent()){ return null; }
-        equipo.setUsuarioId(usuario.get());
-
-        Optional<Marca> marca =
-                marcaRepository.findById(equipoDto.getMarcaId());
-                if(!marca.isPresent()){return null;}
-        equipo.setMarcaId(marca.get());
-        
-        Optional<TipoEquipo> tipo =
-                tipoRepository.findById(equipoDto.getTipoId());
-                if(!tipo.isPresent()){ return null; }
-        equipo.setTipoId(tipo.get());
-
-        Optional<EstadoEquipo> estado = 
-                estadoRepository.findById(equipoDto.getEstadoId());
-                if(!estado.isPresent()){ return null; }
-        equipo.setEstadoId(estado.get());
 
 
         Equipo equipoGuardado = equipoRepository.save(equipo);
