@@ -1,5 +1,6 @@
 package co.iudigital.backend_inventario.service.imp;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,7 +75,11 @@ public class TipoEquipoImp implements ITipoService {
     @Override
     @Transactional
     public TipoEquiDto save(TipoEquiDto tipoEquiDto) throws RestException {
-        
+       
+        LocalDateTime newDate = LocalDateTime.now();
+        tipoEquiDto.setFechaCreacion(newDate);
+        tipoEquiDto.setFechasActualizacion(newDate);
+
         TipoEquipo tipo = new TipoEquipo();
 
         tipo.setNombre(tipoEquiDto.getNombre());
