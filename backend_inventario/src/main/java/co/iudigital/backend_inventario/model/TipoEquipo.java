@@ -55,6 +55,8 @@ public class TipoEquipo implements Serializable{
         this.estado = estado;
     }
 
+    
+
     public LocalDateTime getFechaCreacion() {
         return fechaCreacion;
     }

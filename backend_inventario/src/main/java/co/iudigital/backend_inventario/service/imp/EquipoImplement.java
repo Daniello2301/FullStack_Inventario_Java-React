@@ -86,6 +86,7 @@ public class EquipoImplement implements IEquipoService{
     }
 
 
+
     @Override
     @Transactional(readOnly = true)
     public EquipoDto getById(Long id) throws RestException {
