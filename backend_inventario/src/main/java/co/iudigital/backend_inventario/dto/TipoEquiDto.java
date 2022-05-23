@@ -1,5 +1,6 @@
 package co.iudigital.backend_inventario.dto;
 
+
 import java.time.LocalDateTime;
 
 public class TipoEquiDto {
