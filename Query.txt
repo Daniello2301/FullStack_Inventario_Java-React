@@ -2,6 +2,18 @@ create database Web_inventarios
 
 use web_inventarios;
 
+create table usuarios(
+id int not null auto_increment,
+nombre varchar(255) not null,
+email varchar(255) not null,
+contrasena varchar(255) not null,
+estado varchar(50) not null,
+fecha_creacion datetime not null,
+fecha_actualizacion datetime not null,
+primary key(id),
+unique(email)
+);
+
 
 create table tipos_equipos(
 id int not null auto_increment,
@@ -9,7 +21,10 @@ nombre varchar(255) not null,
 estado varchar(50) not null,
 fecha_creacion datetime not null,
 fecha_actualizacion datetime not null,
-primary key(id)
+usuario_id INT not null,
+foreign key(usuario_id) references usuarios(id),
+primary key(id),
+unique(nombre)
 );
 
 
@@ -19,19 +34,10 @@ nombre varchar(255) not null,
 estado varchar(50) not null,
 fecha_creacion datetime not null,
 fecha_actualizacion datetime not null,
-primary key(id)
-);
-
-
-create table usuarios(
-id int not null auto_increment,
-nombre varchar(255) not null,
-email varchar(255) not null,
-estado varchar(50) not null,
-fecha_creacion datetime not null,
-fecha_actualizacion datetime not null,
+usuario_id INT not null,
+foreign key(usuario_id) references usuarios(id),
 primary key(id),
-unique(email)
+unique(nombre)
 );
 
 
@@ -41,7 +47,10 @@ nombre varchar(255) not null,
 estado varchar(50) not null,
 fecha_creacion datetime not null,
 fecha_actualizacion datetime not null,
-primary key(id)
+usuario_id INT not null,
+foreign key(usuario_id) references usuarios(id),
+primary key(id),
+unique(nombre)
 );
 
 
@@ -67,50 +76,63 @@ foreign key(tipo_id) references tipos_equipos(id),
 unique(serial)
 );
 
-insert into tipos_equipos(nombre, estado, fecha_creacion, fecha_actualizacion) 
-values('Moviles', 'Activo', now(), now()),
-('Cocina', 'Activo', now(), now()),
-('Aseo', 'Activo', now(), now());
 
-insert into marcas(nombre, estado, fecha_creacion, fecha_actualizacion) 
-values ('Samsung', 'Activo', now(), now()),
-('LG', 'Activo', now(), now()),
-('Sony', 'Activo', now(), now()),
-('Lenovo', 'Activo', now(), now()),
-('HP', 'Activo', now(), now()), 
-('Casio', 'Inactivo', now(), now()), 
-('CARTON Y ESTIBA', 'Inactivo', now(), now()),
-('Apple', 'Inactivo', now(), now());
+-- Tipos de Equipos 
+insert into tipos_equipos(nombre, estado, fecha_creacion, fecha_actualizacion, usuario_id) 
+values('Moviles', 'Activo', now(), now(), 1),
+('Computadores', 'Activo', now(), now(), 2),
+('Cocina', 'Activo', now(), now(), 3),
+('Laboratorio', 'Activo', now(), now(), 2),
+('Aseo', 'Inactivo', now(), now(), 5) ;
+
+select * from tipos_equipos te;
+
+-- Marcas 
+insert into marcas(nombre, estado, fecha_creacion, fecha_actualizacion, usuario_id) 
+values ('Aluminios SAS', 'Activo', now(), now(), 3)
+('Samsung', 'Activo', now(), now(), 1),
+('LG', 'Activo', now(), now(), 3),
+('Sony', 'Activo', now(), now(), 5),
+('Lenovo', 'Activo', now(), now(), 4),
+('HP', 'Activo', now(), now(), 2), 
+('Casio', 'Inactivo', now(), now(), 1), 
+('ASUS', 'Activo', now(), now(), 4),
+('Apple', 'Inactivo', now(), now(), 3);
 		
-select * from marcas
+select * from marcas;
 
 
 -- estados_equipos
 
-insert into estados_equipos(nombre, estado, fecha_creacion, fecha_actualizacion) 
-values ('En uso', 'Activo', now(), now()),
-('Depreciado', 'Activo', now(), now()),
-('En Bodega', 'Activo', now(), now()),
-('En reparación', 'Activo', now(), now()),
-('Perdido', 'Activo', now(), now());
+insert into estados_equipos(nombre, estado, fecha_creacion, fecha_actualizacion, usuario_id) 
+values ('En uso', 'Activo', now(), now(), 1),
+('Depreciado', 'Activo', now(), now(), 2),
+('En Bodega', 'Activo', now(), now(), 3),
+('En reparación', 'Activo', now(), now(), 2),
+('Perdido', 'Activo', now(), now(), 5);
+
+
+select * from estados_equipos ee; 
 
 
 -- Usuarios
 
-insert into usuarios(nombre, email, estado, fecha_creacion, fecha_actualizacion) 
-values ('Adrian', 'adrian@gmail.com', 'Activo', now(), now()),
- ('Pedro', 'pedro@gmail.com', 'Activo', now(), now()),
- ('Elena', 'elena@gmail.com', 'Activo', now(), now()),
- ('Julio', 'julio@gmail.com', 'Activo', now(), now()),
- ('Andrea', 'andrea@gmail.com', 'Activo', now(), now());
+insert into usuarios(nombre, email, contrasena, estado, fecha_creacion, fecha_actualizacion) 
+values ('Adrian', 'adrian@gmail.com', '123456', 'Activo', now(), now()),
+ ('Pedro', 'pedro@gmail.com','0987654', 'Activo', now(), now()),
+ ('Elena', 'elena@gmail.com', '121343', 'Activo', now(), now()),
+ ('Julio', 'julio@gmail.com', '1237890','Activo', now(), now()),
+ ('Andrea', 'andrea@gmail.com', '098123', 'Activo', now(), now());
 
 select * from usuarios u 
+
+
+-- Inventarios
 insert into inventarios(serial, modelo, descripcion, foto, fecha_compra, precio, usuario_id, marca_id, tipo_id, estado_id, fecha_creacion, fecha_actualizacion) 
-values ('1245A', 'XCFG', 'Portatil core i5', 'https://mifoto.com', '2022-01-01', 2300000, 1, 4, 1, 1, now(), now()),
-('1245B', 'XCFK', 'Pantalla 24 Pulgadas', 'https://mifoto.com', '2021-12-01', 850000, 1, 4, 1, 1, now(), now()),
-('1247XZ', 'XCFIO', 'Computador escritorio todo en uno', 'https://mifoto.com', '2022-02-28', 3620000, 5, 5, 3, 1, now(), now()),
-('1245XX', 'ER 100S 4E V1', 'Estiba Plastica Er 100s 4e V1', 'https://mifoto.com', '2022-03-12', 259800, 2, 7, 1, 5, now(), now()),
-('ZXSD', 'RRSS B21', 'Iphon 12', 'https://mifoto.com', '2022-04-19', 7850000, 3, 8, 2, 4, now(), now());
+values ('1245A', 'XCFG', 'Portatil core i5', 'https://mifoto.com', '2022-01-01', 2300000, 1, 7, 2, 1, now(), now()),
+('1245B', 'XCFK', 'Pantalla 24 Pulgadas', 'https://mifoto.com', '2021-12-01', 850000, 2, 1, 4, 1, now(), now()),
+('1247XZ', 'XCFIO', 'Computador escritorio todo en uno', 'https://mifoto.com', '2022-02-28', 3620000, 3, 5, 2, 1, now(), now()),
+('1245XX', 'ER 100S 4E V1', 'Estiba Plastica Er 100s 4e V1', 'https://mifoto.com', '2022-03-12', 259800, 4, 9, 5, 5, now(), now()),
+('ZXSD', 'RRSS B21', 'Iphon 12', 'https://mifoto.com', '2022-04-19', 7850000, 2, 8, 1, 3, now(), now());
 
 select * from inventarios i 
--- Listar los activos de marca Lenovo y mostrar en la consulta, nombre de usuario, marca, tipo y estado respectivamente. 

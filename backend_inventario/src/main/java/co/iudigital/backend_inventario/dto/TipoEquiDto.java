@@ -15,6 +15,8 @@ public class TipoEquiDto {
 
     private LocalDateTime fechasActualizacion = LocalDateTime.now();
 
+    private Long usuarioId;
+
     public Long getId() {
         return id;
     }
@@ -53,6 +55,14 @@ public class TipoEquiDto {
 
     public void setFechasActualizacion(LocalDateTime fechasActualizacion) {
         this.fechasActualizacion = fechasActualizacion;
+    }
+
+    public Long getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(Long usuarioId) {
+        this.usuarioId = usuarioId;
     }
 
     

@@ -134,7 +134,7 @@ public class EquipoImplement implements IEquipoService{
 
         Optional<Usuario> usuario = usuarioRepository.findById(equipoDto.getUsuarioId());
 
-                if(!usuario.isPresent()){ return null; }
+                if(!usuario.isPresent()){ return null; } 
         equipo.setUsuario(usuario.get());
 
         Optional<Marca> marca = marcaRepository.findById(equipoDto.getMarcaId());
