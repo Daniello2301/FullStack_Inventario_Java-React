@@ -11,9 +11,9 @@ public class TipoEquiDto {
 
     private String estado;
 
-    private LocalDateTime fechaCreacion;
+    private LocalDateTime fechaCreacion = LocalDateTime.now();
 
-    private LocalDateTime fechasActualizacion;
+    private LocalDateTime fechasActualizacion = LocalDateTime.now();
 
     public Long getId() {
         return id;

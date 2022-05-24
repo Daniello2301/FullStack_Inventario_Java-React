@@ -4,7 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.OverridesAttribute;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -166,5 +172,115 @@ public class EquipoImplement implements IEquipoService{
         equipoRepository.deleteById(id);
         
     }
+
+
+
+    @Override
+    @Transactional
+    public Page<Equipo> getEquiposPagination(int pageNumber, int pageSize) throws RestException {
+        
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<Equipo> equipos = equipoRepository.findAll(pageable);
+
+        if(equipos == null){
+            throw new NotFoundException(ErrorDto
+                    .getErrorDto(
+                        HttpStatus.NOT_FOUND.getReasonPhrase(), 
+                        "No se encontraron datos", 
+                        HttpStatus.NOT_FOUND.value()
+                        )
+                    );
+        }
+
+/*         List<EquipoDto> equiposDto = new ArrayList<>();
+
+
+        for(Equipo equipo: equipos){
+            EquipoDto equipoDto = new EquipoDto();
+
+            equipoDto.setId(equipo.getId());
+            equipoDto.setSerial(equipo.getSerial());
+            equipoDto.setModelo(equipo.getModelo());
+            equipoDto.setDescripcion(equipo.getDescripcion());
+            equipoDto.setImagen(equipo.getFoto());
+            equipoDto.setFechaCompra(equipo.getFechaCompra());
+            equipoDto.setUsuarioId(equipo.getUsuario().getId());
+            equipoDto.setMarcaId(equipo.getMarca().getId());
+            equipoDto.setTipoId(equipo.getTipo().getId());
+            equipoDto.setEstadoId(equipo.getEstado().getId());
+            equipoDto.setFechaCreacion(equipo.getFechaCreacion());
+            equipoDto.setFechaActualizacion(equipo.getFechaActualizacion());
+
+            equiposDto.add(equipoDto);
+        } */ 
+
+        return equipos;
+    }
+
+
+    @Override
+    @Transactional
+    public List<EquipoDto> getSortBy(String field) throws RestException{
+
+        List<Equipo> equipos = equipoRepository.findAll(Sort.by(Sort.Direction.ASC, field));
+
+        if(equipos == null){
+            throw new NotFoundException(ErrorDto
+                    .getErrorDto(
+                        HttpStatus.NOT_FOUND.getReasonPhrase(), 
+                        "No se encontraron datos", 
+                        HttpStatus.NOT_FOUND.value()
+                        )
+                    );
+        }
+
+        List<EquipoDto> equiposDto = new ArrayList<>();
+
+        for(Equipo equipo: equipos){
+
+            EquipoDto equipoDto = new EquipoDto();
+
+            equipoDto.setId(equipo.getId());
+            equipoDto.setSerial(equipo.getSerial());
+            equipoDto.setModelo(equipo.getModelo());
+            equipoDto.setDescripcion(equipo.getDescripcion());
+            equipoDto.setImagen(equipo.getFoto());
+            equipoDto.setFechaCompra(equipo.getFechaCompra());
+            equipoDto.setUsuarioId(equipo.getUsuario().getId());
+            equipoDto.setMarcaId(equipo.getMarca().getId());
+            equipoDto.setTipoId(equipo.getTipo().getId());
+            equipoDto.setEstadoId(equipo.getEstado().getId());
+            equipoDto.setFechaCreacion(equipo.getFechaCreacion());
+            equipoDto.setFechaActualizacion(equipo.getFechaActualizacion());
+
+            equiposDto.add(equipoDto);
+
+        }
+        return equiposDto;
+    }
+
+
+
+    @Override
+    public Page<Equipo> getEquiposPaginaionAndSorting(int pageNumber, int pageSize, String field) throws RestException {
+        
+        Pageable pageable = PageRequest.of(pageNumber, pageSize).withSort(Sort.by(field));
+
+        Page<Equipo> equipos = equipoRepository.findAll(pageable); 
+        
+        if(equipos == null){
+            throw new NotFoundException(ErrorDto
+                    .getErrorDto(
+                        HttpStatus.NOT_FOUND.getReasonPhrase(), 
+                        "No se encontraron datos", 
+                        HttpStatus.NOT_FOUND.value()
+                        )
+                    );
+        }
+        
+        return equipos;
+    }
+    
     
 }

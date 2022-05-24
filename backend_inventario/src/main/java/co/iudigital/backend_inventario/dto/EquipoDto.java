@@ -1,6 +1,6 @@
 package co.iudigital.backend_inventario.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -18,7 +18,7 @@ public class EquipoDto {
 
     private Double precio;
 
-    private LocalDate fechaCompra;
+    private LocalDateTime fechaCompra;
 
     @JsonProperty("usuario_id")
     private Long usuarioId;
@@ -32,9 +32,9 @@ public class EquipoDto {
     @JsonProperty("estado_id")
     private Long estadoId;
 
-    private LocalDate fechaCreacion;
+    private LocalDateTime fechaCreacion = LocalDateTime.now();
     
-    private LocalDate fechaActualizacion;
+    private LocalDateTime fechaActualizacion = LocalDateTime.now();
 
     public Long getId() {
         return id;
@@ -84,11 +84,11 @@ public class EquipoDto {
         this.precio = precio;
     }
 
-    public LocalDate getFechaCompra() {
+    public LocalDateTime getFechaCompra() {
         return fechaCompra;
     }
 
-    public void setFechaCompra(LocalDate fechaCompra) {
+    public void setFechaCompra(LocalDateTime fechaCompra) {
         this.fechaCompra = fechaCompra;
     }
     
@@ -124,19 +124,19 @@ public class EquipoDto {
         this.estadoId = estadoId;
     }
 
-    public LocalDate getFechaCreacion() {
+    public LocalDateTime getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(LocalDate fechaCreacion) {
+    public void setFechaCreacion(LocalDateTime fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public LocalDate getFechaActualizacion() {
+    public LocalDateTime getFechaActualizacion() {
         return fechaActualizacion;
     }
 
-    public void setFechaActualizacion(LocalDate fechaActualizacion) {
+    public void setFechaActualizacion(LocalDateTime fechaActualizacion) {
         this.fechaActualizacion = fechaActualizacion;
     }
 

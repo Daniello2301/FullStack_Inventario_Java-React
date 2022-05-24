@@ -1,7 +1,7 @@
 package co.iudigital.backend_inventario.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,7 +31,7 @@ public class Equipo implements Serializable{
     private Double precio;
 
     @Column(name = "fecha_compra")
-    private LocalDate fechaCompra;
+    private LocalDateTime fechaCompra;
 
     @OneToOne
     @JoinColumn(name = "usuario_id")
@@ -50,10 +50,10 @@ public class Equipo implements Serializable{
     private EstadoEquipo estado;
  
     @Column(name = "fecha_creacion")
-    private LocalDate fechaCreacion;
+    private LocalDateTime fechaCreacion;
 
     @Column(name = "fecha_actualizacion")
-    private LocalDate fechaActualizacion;
+    private LocalDateTime fechaActualizacion;
 
     public Long getId() {
         return id;
@@ -103,11 +103,11 @@ public class Equipo implements Serializable{
         this.precio = precio;
     }
 
-    public LocalDate getFechaCompra() {
+    public LocalDateTime getFechaCompra() {
         return fechaCompra;
     }
 
-    public void setFechaCompra(LocalDate fechaCompra) {
+    public void setFechaCompra(LocalDateTime fechaCompra) {
         this.fechaCompra = fechaCompra;
     }
 
@@ -143,19 +143,19 @@ public class Equipo implements Serializable{
         this.estado = estado;
     }
 
-    public LocalDate getFechaCreacion() {
+    public LocalDateTime getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(LocalDate fechaCreacion) {
+    public void setFechaCreacion(LocalDateTime fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public LocalDate getFechaActualizacion() {
+    public LocalDateTime getFechaActualizacion() {
         return fechaActualizacion;
     }
 
-    public void setFechaActualizacion(LocalDate fechaActualizacion) {
+    public void setFechaActualizacion(LocalDateTime fechaActualizacion) {
         this.fechaActualizacion = fechaActualizacion;
     }
 

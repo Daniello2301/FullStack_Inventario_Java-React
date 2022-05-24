@@ -10,9 +10,9 @@ public class MarcaDto {
 
     private String estado;
 
-    private LocalDate fechaCreacion;
+    private LocalDate fechaCreacion = LocalDate.now();
 
-    private LocalDate fechaActualizacion;
+    private LocalDate fechaActualizacion = LocalDate.now();
 
     public Long getId() {
         return id;

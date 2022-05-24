@@ -1,5 +1,6 @@
 package co.iudigital.backend_inventario.service.imp;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +55,9 @@ public class UsuarioImp implements IUsuarioService {
         return usuariosDto;
     }
 
+
+
+
     @Override
     @Transactional(readOnly = true)
     public UsuarioDto getById(Long id) throws RestException {
@@ -73,6 +77,10 @@ public class UsuarioImp implements IUsuarioService {
         return usuarioDto;
     }
 
+
+
+
+
     @Override
     @Transactional
     public UsuarioDto save(UsuarioDto usuarioDto) throws RestException {
@@ -83,8 +91,8 @@ public class UsuarioImp implements IUsuarioService {
         usuario.setEstado(usuarioDto.getEstado());
         usuario.setEmail(usuarioDto.getEmail());
         usuario.setContrasena(usuarioDto.getContrasena());
-        usuario.setFechaCreacion(usuarioDto.getFechaCreacion());
-        usuario.setFechaActualizacion(usuarioDto.getFechaActualizacion());
+        usuario.setFechaCreacion(LocalDate.now());
+        usuario.setFechaActualizacion(LocalDate.now());
 
         Usuario usuarioGuardado = usuarioRepository.save(usuario);
 

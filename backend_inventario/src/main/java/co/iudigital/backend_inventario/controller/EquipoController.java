@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,6 +24,7 @@ import co.iudigital.backend_inventario.exception.ErrorDto;
 import co.iudigital.backend_inventario.exception.InternalServerErrorException;
 import co.iudigital.backend_inventario.exception.NotFoundException;
 import co.iudigital.backend_inventario.exception.RestException;
+import co.iudigital.backend_inventario.model.Equipo;
 import co.iudigital.backend_inventario.service.iface.IEquipoService;
 
 @RestController
@@ -49,10 +51,7 @@ public class EquipoController {
 
 
 
-
-
-
-
+    
     @GetMapping("/{id}")
     public ResponseEntity<EquipoDto> getById(@PathVariable Long id) throws RestException
     {
@@ -65,8 +64,42 @@ public class EquipoController {
 
 
 
+    @GetMapping("/pagination/{pageNumber}/{pageSize}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public ResponseEntity<Object> getEquiposPagination(@PathVariable int pageNumber, @PathVariable int pageSize) throws RestException
+    {
+        LOG.info("Equipos...");
+        Page<Equipo> response = 
+                equipoService.getEquiposPagination(pageNumber, pageSize);
+        
+        return ResponseEntity.ok().body(response);
+    }
 
 
+
+
+    @GetMapping("/sortby/{field}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public ResponseEntity<Object> getSortBy(@PathVariable String field) throws RestException
+    {
+        LOG.info("Equipos...");
+        List<EquipoDto> response = 
+                equipoService.getSortBy(field);
+        
+        return ResponseEntity.ok().body(response);
+    }
+
+
+    @GetMapping("/paginationAndSort/{pageNumber}/{pageSize}/{field}")
+    public ResponseEntity<Object> getEquiposPaginationAndSorting(@PathVariable int pageNumber, @PathVariable int pageSize, @PathVariable String field) throws RestException{
+
+        LOG.info("Pagination And Sort Equipos");
+        Page<Equipo> response = equipoService.getEquiposPaginaionAndSorting(pageNumber, pageSize, field);
+
+        return ResponseEntity.ok().body(response);
+
+
+    }
 
 
 
