@@ -191,28 +191,6 @@ public class EquipoImplement implements IEquipoService{
                     );
         }
 
-/*         List<EquipoDto> equiposDto = new ArrayList<>();
-
-
-        for(Equipo equipo: equipos){
-            EquipoDto equipoDto = new EquipoDto();
-
-            equipoDto.setId(equipo.getId());
-            equipoDto.setSerial(equipo.getSerial());
-            equipoDto.setModelo(equipo.getModelo());
-            equipoDto.setDescripcion(equipo.getDescripcion());
-            equipoDto.setImagen(equipo.getFoto());
-            equipoDto.setFechaCompra(equipo.getFechaCompra());
-            equipoDto.setUsuarioId(equipo.getUsuario().getId());
-            equipoDto.setMarcaId(equipo.getMarca().getId());
-            equipoDto.setTipoId(equipo.getTipo().getId());
-            equipoDto.setEstadoId(equipo.getEstado().getId());
-            equipoDto.setFechaCreacion(equipo.getFechaCreacion());
-            equipoDto.setFechaActualizacion(equipo.getFechaActualizacion());
-
-            equiposDto.add(equipoDto);
-        } */ 
-
         return equipos;
     }
 
