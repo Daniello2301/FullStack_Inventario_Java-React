@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -86,6 +87,32 @@ public class UsuarioController {
         }
     }
 
+
+    @PutMapping(consumes = "application/json")
+    @ResponseStatus
+    public ResponseEntity<UsuarioDto> update(@RequestBody UsuarioDto usuarioDto) throws RestException
+    {
+        try 
+        {
+         UsuarioDto response = usuarioService.update(usuarioDto);
+         
+         return new ResponseEntity<>(response, HttpStatus.OK);
+          
+        } catch (BadRequestException e) 
+        {
+            LOG.error("Error", e);
+            throw e; 
+        } catch (InternalServerErrorException e)
+        {
+            throw new InternalServerErrorException(
+                ErrorDto.getErrorDto(
+                    HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), 
+                    "Error interno en el servidor",
+                    HttpStatus.INTERNAL_SERVER_ERROR.value()
+                    )
+            ); 
+        }
+    }
 
 
     @DeleteMapping("/{id}")

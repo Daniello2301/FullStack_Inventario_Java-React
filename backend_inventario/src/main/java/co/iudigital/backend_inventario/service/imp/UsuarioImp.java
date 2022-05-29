@@ -80,9 +80,11 @@ public class UsuarioImp implements IUsuarioService {
         
         LocalDateTime dateSave = LocalDateTime.now();
         
+        usuarioDto.setFechaCreacion(dateSave);
+        usuarioDto.setFechaActualizacion(dateSave);
+        
         Usuario usuario = usuarioConverter.usuarioDTOToUsuario(usuarioDto);
-        usuario.setFechaCreacion(dateSave);
-        usuario.setFechaActualizacion(dateSave);
+
         
         Usuario usuarioGuardado = usuarioRepository.save(usuario);
 
@@ -90,6 +92,22 @@ public class UsuarioImp implements IUsuarioService {
 
         return usuarioDto;
     }
+
+    @Override
+    @Transactional
+    public UsuarioDto update(UsuarioDto usuarioDto) throws RestException {
+        LocalDateTime newDate = LocalDateTime.now();
+        usuarioDto.setFechaActualizacion(newDate);
+
+        Usuario usuario = usuarioConverter.usuarioDTOToUsuario(usuarioDto);
+
+        Usuario usuarioSave = usuarioRepository.save(usuario);
+
+        usuarioDto.setId(usuarioSave.getId());
+
+        return usuarioDto;
+    }
+
 
     @Override
     @Transactional
@@ -106,9 +124,8 @@ public class UsuarioImp implements IUsuarioService {
     public Page<Usuario> usersPagintation(int numPage, int sizePage) throws RestException {
         
         Pageable pageable = PageRequest.of(numPage, sizePage);
+        
         Page<Usuario> pageUsuarios = usuarioRepository.findAll(pageable);
-
-        //List<Usuario> usuarios = usuarioRepository.findAll();
 
         if(pageUsuarios == null){
             throw new NotFoundException(ErrorDto
@@ -119,7 +136,6 @@ public class UsuarioImp implements IUsuarioService {
                         )
                     );
         }
-
         return pageUsuarios;
     }
 

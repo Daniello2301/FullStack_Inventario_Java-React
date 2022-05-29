@@ -4,6 +4,11 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import co.iudigital.backend_inventario.model.EstadoEquipo;
+import co.iudigital.backend_inventario.model.Marca;
+import co.iudigital.backend_inventario.model.TipoEquipo;
+import co.iudigital.backend_inventario.model.Usuario;
+
 public class EquipoDto {
     
     private Long id;
@@ -18,23 +23,25 @@ public class EquipoDto {
 
     private Double precio;
 
+    private String estado;
+
     private LocalDateTime fechaCompra;
 
-    @JsonProperty("usuario_id")
-    private Long usuarioId;
+    @JsonProperty("usuario")
+    private Usuario usuario;
 
-    @JsonProperty("marca_id")
-    private Long marcaId;
+    @JsonProperty("marca")
+    private Marca marca;
 
-    @JsonProperty("tipo_id")
-    private Long tipoId;
+    @JsonProperty("tipoEquipo")
+    private TipoEquipo tipoEquipo;
 
-    @JsonProperty("estado_id")
-    private Long estadoId;
+    @JsonProperty("estadoEquipo")
+    private EstadoEquipo estadoEquipo;
 
     private LocalDateTime fechaCreacion = LocalDateTime.now();
     
-    private LocalDateTime fechaActualizacion = LocalDateTime.now();
+    private LocalDateTime fechaActualizacion;
 
     public Long getId() {
         return id;
@@ -84,6 +91,15 @@ public class EquipoDto {
         this.precio = precio;
     }
 
+    
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     public LocalDateTime getFechaCompra() {
         return fechaCompra;
     }
@@ -91,37 +107,37 @@ public class EquipoDto {
     public void setFechaCompra(LocalDateTime fechaCompra) {
         this.fechaCompra = fechaCompra;
     }
-    
-    public Long getUsuarioId() {
-        return usuarioId;
+
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setUsuarioId(Long usuarioId) {
-        this.usuarioId = usuarioId;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
-    public Long getMarcaId() {
-        return marcaId;
+    public Marca getMarca() {
+        return marca;
     }
 
-    public void setMarcaId(Long marcaId) {
-        this.marcaId = marcaId;
+    public void setMarca(Marca marca) {
+        this.marca = marca;
     }
 
-    public Long getTipoId() {
-        return tipoId;
+    public TipoEquipo getTipoEquipo() {
+        return tipoEquipo;
     }
 
-    public void setTipoId(Long tipoId) {
-        this.tipoId = tipoId;
+    public void setTipoEquipo(TipoEquipo tipoEquipo) {
+        this.tipoEquipo = tipoEquipo;
     }
 
-    public Long getEstadoId() {
-        return estadoId;
+    public EstadoEquipo getEstadoEquipo() {
+        return estadoEquipo;
     }
 
-    public void setEstadoId(Long estadoId) {
-        this.estadoId = estadoId;
+    public void setEstadoEquipo(EstadoEquipo estadoEquipo) {
+        this.estadoEquipo = estadoEquipo;
     }
 
     public LocalDateTime getFechaCreacion() {
