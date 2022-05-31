@@ -30,6 +30,8 @@ public class Equipo implements Serializable{
 
     private Double precio;
 
+    private String estado;
+
     @Column(name = "fecha_compra")
     private LocalDateTime fechaCompra;
 
@@ -43,11 +45,11 @@ public class Equipo implements Serializable{
 
     @OneToOne
     @JoinColumn(name = "tipo_id")
-    private TipoEquipo tipo;
+    private TipoEquipo tipoEquipo;
 
     @OneToOne
     @JoinColumn(name = "estado_id")
-    private EstadoEquipo estado;
+    private EstadoEquipo estadoEquipo;
  
     @Column(name = "fecha_creacion")
     private LocalDateTime fechaCreacion;
@@ -103,6 +105,14 @@ public class Equipo implements Serializable{
         this.precio = precio;
     }
 
+    public String getEstado(){
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     public LocalDateTime getFechaCompra() {
         return fechaCompra;
     }
@@ -126,21 +136,21 @@ public class Equipo implements Serializable{
     public void setMarca(Marca marca) {
         this.marca = marca;
     }
-
-    public TipoEquipo getTipo() {
-        return tipo;
+    
+    public TipoEquipo getTipoEquipo() {
+        return tipoEquipo;
     }
 
-    public void setTipo(TipoEquipo tipo) {
-        this.tipo = tipo;
+    public void setTipoEquipo(TipoEquipo tipoEquipo) {
+        this.tipoEquipo = tipoEquipo;
     }
 
-    public EstadoEquipo getEstado() {
-        return estado;
+    public EstadoEquipo getEstadoEquipo() {
+        return estadoEquipo;
     }
 
-    public void setEstado(EstadoEquipo estado) {
-        this.estado = estado;
+    public void setEstadoEquipo(EstadoEquipo estadoEquipo) {
+        this.estadoEquipo = estadoEquipo;
     }
 
     public LocalDateTime getFechaCreacion() {

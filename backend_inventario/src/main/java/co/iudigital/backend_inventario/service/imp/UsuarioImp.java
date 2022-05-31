@@ -1,14 +1,19 @@
 package co.iudigital.backend_inventario.service.imp;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import co.iudigital.backend_inventario.converter.UsuarioConverter;
 import co.iudigital.backend_inventario.dto.UsuarioDto;
 import co.iudigital.backend_inventario.exception.ErrorDto;
 import co.iudigital.backend_inventario.exception.NotFoundException;
@@ -22,6 +27,9 @@ public class UsuarioImp implements IUsuarioService {
 
     @Autowired
     private IUsuarioRepository usuarioRepository;
+
+    @Autowired
+    private UsuarioConverter usuarioConverter;
 
     @Override
     @Transactional(readOnly = true)
@@ -40,15 +48,8 @@ public class UsuarioImp implements IUsuarioService {
         List<UsuarioDto> usuariosDto = new ArrayList<>();
 
         for (Usuario usuario : usuarios) {
-            UsuarioDto usuarioDto = new UsuarioDto();
 
-            usuarioDto.setId(usuario.getId());
-            usuarioDto.setNombre(usuario.getNombre());
-            usuarioDto.setEstado(usuario.getEstado());
-            usuarioDto.setEmail(usuario.getEmail());
-            usuarioDto.setContrasena(usuario.getContrasena());
-            usuarioDto.setFechaCreacion(usuario.getFechaCreacion());
-            usuarioDto.setFechaActualizacion(usuario.getFechaActualizacion());
+            UsuarioDto usuarioDto = usuarioConverter.usuarioToUsuarioDTO(usuario);
 
             usuariosDto.add(usuarioDto);
         }
@@ -58,21 +59,13 @@ public class UsuarioImp implements IUsuarioService {
 
 
 
-    @Override
+    @Override 
     @Transactional(readOnly = true)
     public UsuarioDto getById(Long id) throws RestException {
 
         Usuario usuario = usuarioRepository.findById(id).orElse(null);
 
-        UsuarioDto usuarioDto = new UsuarioDto();
-
-        usuarioDto.setId(usuario.getId());
-        usuarioDto.setNombre(usuario.getNombre());
-        usuarioDto.setEstado(usuario.getEstado());
-        usuarioDto.setEmail(usuario.getEmail());
-        usuarioDto.setContrasena(usuario.getContrasena());
-        usuarioDto.setFechaCreacion(usuario.getFechaCreacion());
-        usuarioDto.setFechaActualizacion(usuario.getFechaActualizacion());
+        UsuarioDto usuarioDto = usuarioConverter.usuarioToUsuarioDTO(usuario);
 
         return usuarioDto;
     }
@@ -84,16 +77,15 @@ public class UsuarioImp implements IUsuarioService {
     @Override
     @Transactional
     public UsuarioDto save(UsuarioDto usuarioDto) throws RestException {
+        
+        LocalDateTime dateSave = LocalDateTime.now();
+        
+        usuarioDto.setFechaCreacion(dateSave);
+        usuarioDto.setFechaActualizacion(dateSave);
+        
+        Usuario usuario = usuarioConverter.usuarioDTOToUsuario(usuarioDto);
 
-        Usuario usuario = new Usuario();
-
-        usuario.setNombre(usuarioDto.getNombre());
-        usuario.setEstado(usuarioDto.getEstado());
-        usuario.setEmail(usuarioDto.getEmail());
-        usuario.setContrasena(usuarioDto.getContrasena());
-        usuario.setFechaCreacion(LocalDate.now());
-        usuario.setFechaActualizacion(LocalDate.now());
-
+        
         Usuario usuarioGuardado = usuarioRepository.save(usuario);
 
         usuarioDto.setId(usuarioGuardado.getId());
@@ -103,10 +95,101 @@ public class UsuarioImp implements IUsuarioService {
 
     @Override
     @Transactional
+    public UsuarioDto update(UsuarioDto usuarioDto) throws RestException {
+        LocalDateTime newDate = LocalDateTime.now();
+        usuarioDto.setFechaActualizacion(newDate);
+
+        Usuario usuario = usuarioConverter.usuarioDTOToUsuario(usuarioDto);
+
+        Usuario usuarioSave = usuarioRepository.save(usuario);
+
+        usuarioDto.setId(usuarioSave.getId());
+
+        return usuarioDto;
+    }
+
+
+    @Override
+    @Transactional
     public void deleteById(Long id) {
 
         usuarioRepository.deleteById(id);
 
+    }
+
+
+
+
+    @Override
+    public Page<Usuario> usersPagintation(int numPage, int sizePage) throws RestException {
+        
+        Pageable pageable = PageRequest.of(numPage, sizePage);
+        
+        Page<Usuario> pageUsuarios = usuarioRepository.findAll(pageable);
+
+        if(pageUsuarios == null){
+            throw new NotFoundException(ErrorDto
+                    .getErrorDto(
+                        HttpStatus.NOT_FOUND.getReasonPhrase(), 
+                        "No se encontraron datos", 
+                        HttpStatus.NOT_FOUND.value()
+                        )
+                    );
+        }
+        return pageUsuarios;
+    }
+
+
+
+
+    @Override
+    public List<UsuarioDto> usersSortBy(String field) throws RestException {     
+        
+        List<Usuario> usuarios = usuarioRepository.findAll(Sort.by(Sort.Direction.ASC, field));
+
+        if(usuarios == null){
+            throw new NotFoundException(ErrorDto
+                    .getErrorDto(
+                        HttpStatus.NOT_FOUND.getReasonPhrase(), 
+                        "No se encontraron datos", 
+                        HttpStatus.NOT_FOUND.value()
+                        )
+                    );
+        }
+        
+        List<UsuarioDto> usuariosDto = new ArrayList<>();
+
+        for(Usuario usuario: usuarios){
+
+            UsuarioDto usuarioDto = usuarioConverter.usuarioToUsuarioDTO(usuario);
+
+            usuariosDto.add(usuarioDto);
+        }
+
+        return usuariosDto;
+    }
+
+
+
+
+    @Override
+    public Page<Usuario> usersPagitaionAndSort(int numPage, int sizePage, String field) throws RestException {
+        
+        Pageable pageable = PageRequest.of(numPage, sizePage).withSort(Sort.by(field));
+
+        Page<Usuario> usuarios = usuarioRepository.findAll(pageable); 
+        
+        if(usuarios == null){
+            throw new NotFoundException(ErrorDto
+                    .getErrorDto(
+                        HttpStatus.NOT_FOUND.getReasonPhrase(), 
+                        "No se encontraron datos", 
+                        HttpStatus.NOT_FOUND.value()
+                        )
+                    );
+        }
+
+        return usuarios;
     }
 
 }

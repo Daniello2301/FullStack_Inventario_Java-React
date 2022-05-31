@@ -5,10 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import co.iudigital.backend_inventario.converter.TipoEquipoConverter;
 import co.iudigital.backend_inventario.dto.TipoEquiDto;
 import co.iudigital.backend_inventario.exception.ErrorDto;
 import co.iudigital.backend_inventario.exception.NotFoundException;
@@ -24,7 +29,9 @@ public class TipoEquipoImp implements ITipoService {
     @Autowired
     private ITipoRepository tipoRepository;
     
-    
+    @Autowired
+    private TipoEquipoConverter tipoConverter;
+
     @Override
     @Transactional(readOnly = true)
     public List<TipoEquiDto> getAll() throws RestException {
@@ -41,6 +48,13 @@ public class TipoEquipoImp implements ITipoService {
         }
         List<TipoEquiDto> tiposDto = new ArrayList<>();
 
+        for(TipoEquipo tipo: tiposEquipo)
+        {
+            TipoEquiDto tipoDto = tipoConverter.tipoEquipoToTipoEquipoDTO(tipo);
+
+            tiposDto.add(tipoDto);
+        }
+
         return tiposDto;
     }
 
@@ -51,13 +65,9 @@ public class TipoEquipoImp implements ITipoService {
     public TipoEquiDto getById(Long id) throws RestException {
         
         TipoEquipo tipo = tipoRepository.findById(id).orElse(null);
-        TipoEquiDto tipoDto = new TipoEquiDto();
+        
+        TipoEquiDto tipoDto = tipoConverter.tipoEquipoToTipoEquipoDTO(tipo);
 
-        tipoDto.setId(tipo.getId());
-        tipoDto.setNombre(tipo.getNombre());
-        tipoDto.setEstado(tipo.getNombre());
-        tipoDto.setFechaCreacion(tipo.getFechaCreacion());
-        tipoDto.setFechasActualizacion(tipo.getFechaActualizacion());
 
         return tipoDto;
     }
@@ -67,15 +77,9 @@ public class TipoEquipoImp implements ITipoService {
     public TipoEquiDto save(TipoEquiDto tipoEquiDto) throws RestException {
        
         LocalDateTime newDate = LocalDateTime.now();
-        tipoEquiDto.setFechaCreacion(newDate);
-        tipoEquiDto.setFechasActualizacion(newDate);
+        tipoEquiDto.setFechaActualizacion(newDate);
 
-        TipoEquipo tipo = new TipoEquipo();
-
-        tipo.setNombre(tipoEquiDto.getNombre());
-        tipo.setEstado(tipoEquiDto.getEstado());
-        tipo.setFechaCreacion(tipoEquiDto.getFechaCreacion());
-        tipo.setFechaActualizacion(tipoEquiDto.getFechasActualizacion());
+        TipoEquipo tipo = tipoConverter.tipoEquipoDTOToTipoEquipo(tipoEquiDto);
 
         TipoEquipo tipoGuardado = tipoRepository.save(tipo);
 
@@ -84,12 +88,81 @@ public class TipoEquipoImp implements ITipoService {
         return tipoEquiDto;
     }
 
+    
+
     @Override
     @Transactional
     public void deleteById(Long id) {
         
         tipoRepository.deleteById(id);
         
+    }
+
+    @Override
+    public Page<TipoEquipo> paginationTipos(int pageNum, int pageSize) throws RestException {
+        
+        Pageable pageable = PageRequest.of(pageNum, pageSize);
+
+        Page<TipoEquipo> pageTipos = tipoRepository.findAll(pageable);
+
+        if(pageTipos == null)
+        {
+            throw new NotFoundException(ErrorDto
+                .getErrorDto(HttpStatus.NOT_FOUND.getReasonPhrase(), 
+                        "No se encontraron los datos", 
+                        HttpStatus.NOT_FOUND.value()
+                        )
+                    );
+        }
+
+        return pageTipos;
+    }
+
+    @Override
+    public List<TipoEquiDto> sortByTipos(String field) throws RestException {
+        
+        List<TipoEquipo> tipos = tipoRepository.findAll(Sort.by(Sort.Direction.ASC, field));
+
+        if(tipos == null)
+        {
+            throw new NotFoundException(ErrorDto.getErrorDto(HttpStatus.NOT_FOUND.getReasonPhrase(), 
+                                                            "No se encontraron los datos", 
+                                                            HttpStatus.NOT_FOUND.value()
+                                                            )
+                                        );
+        }
+
+        List<TipoEquiDto> tiposDTO = new ArrayList<>();
+
+        for(TipoEquipo tipo: tipos){
+
+            TipoEquiDto tipoDTO = tipoConverter.tipoEquipoToTipoEquipoDTO(tipo);
+
+            tiposDTO.add(tipoDTO);
+
+        }
+
+        return tiposDTO;
+    }
+
+    @Override
+    public Page<TipoEquipo> paginationAndSort(int pageNum, int pageSize, String field) throws RestException {
+        
+        Pageable pageable = PageRequest.of(pageNum, pageSize).withSort(Sort.by(field));
+
+        Page<TipoEquipo> pageSortTipos = tipoRepository.findAll(pageable);
+
+        if(pageSortTipos == null)
+        {
+            throw new NotFoundException(ErrorDto
+            .getErrorDto(HttpStatus.NOT_FOUND.getReasonPhrase(), 
+                            "No se encontraron los datos", 
+                            HttpStatus.NOT_FOUND.value()
+                            )
+                        );
+        }
+
+        return pageSortTipos;
     }
     
 }

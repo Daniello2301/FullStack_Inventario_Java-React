@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -23,6 +25,7 @@ import co.iudigital.backend_inventario.exception.ErrorDto;
 import co.iudigital.backend_inventario.exception.InternalServerErrorException;
 import co.iudigital.backend_inventario.exception.NotFoundException;
 import co.iudigital.backend_inventario.exception.RestException;
+import co.iudigital.backend_inventario.model.Usuario;
 import co.iudigital.backend_inventario.service.iface.IUsuarioService;
 
 @RestController
@@ -85,6 +88,32 @@ public class UsuarioController {
     }
 
 
+    @PutMapping(consumes = "application/json")
+    @ResponseStatus
+    public ResponseEntity<UsuarioDto> update(@RequestBody UsuarioDto usuarioDto) throws RestException
+    {
+        try 
+        {
+         UsuarioDto response = usuarioService.update(usuarioDto);
+         
+         return new ResponseEntity<>(response, HttpStatus.OK);
+          
+        } catch (BadRequestException e) 
+        {
+            LOG.error("Error", e);
+            throw e; 
+        } catch (InternalServerErrorException e)
+        {
+            throw new InternalServerErrorException(
+                ErrorDto.getErrorDto(
+                    HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), 
+                    "Error interno en el servidor",
+                    HttpStatus.INTERNAL_SERVER_ERROR.value()
+                    )
+            ); 
+        }
+    }
+
 
     @DeleteMapping("/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
@@ -105,5 +134,42 @@ public class UsuarioController {
         {
             usuarioService.deleteById(id);
         }
+    }
+
+
+    @GetMapping("/pagination/{numPage}/{sizePage}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public ResponseEntity<Object> usersPagintation(@PathVariable int numPage, @PathVariable int sizePage) throws RestException
+    {
+        LOG.info("Equipos...");
+        Page<Usuario> response = 
+                usuarioService.usersPagintation(numPage, sizePage);
+        
+        return ResponseEntity.ok().body(response);
+    }
+
+
+
+
+    @GetMapping("/sortby/{field}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public ResponseEntity<Object> usersSortBy(@PathVariable String field) throws RestException
+    {
+        LOG.info("Equipos...");
+        List<UsuarioDto> response = usuarioService.usersSortBy(field);
+        
+        return ResponseEntity.ok().body(response);
+    }
+
+
+    @GetMapping("/paginationAndSort/{numPage}/{sizePage}/{field}")
+    public ResponseEntity<Object> usersPagitaionAndSort(@PathVariable int numPage, @PathVariable int sizePage, @PathVariable String field) throws RestException{
+
+        LOG.info("Pagination And Sort Equipos");
+        Page<Usuario> response = usuarioService.usersPagitaionAndSort(numPage, sizePage, field);
+
+        return ResponseEntity.ok().body(response);
+
+
     }
 }

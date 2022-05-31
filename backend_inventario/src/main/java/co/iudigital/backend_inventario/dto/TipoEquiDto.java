@@ -4,6 +4,9 @@ package co.iudigital.backend_inventario.dto;
 import java.time.LocalDateTime;
 
 
+import co.iudigital.backend_inventario.model.Usuario;
+
+
 public class TipoEquiDto {
     
     private Long id;
@@ -14,7 +17,10 @@ public class TipoEquiDto {
 
     private LocalDateTime fechaCreacion = LocalDateTime.now();
 
-    private LocalDateTime fechasActualizacion = LocalDateTime.now();
+    private LocalDateTime fechasActualizacion;
+
+
+    private Usuario usuario;
 
     public Long getId() {
         return id;
@@ -48,14 +54,25 @@ public class TipoEquiDto {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public LocalDateTime getFechasActualizacion() {
+    public LocalDateTime getFechaActualizacion() {
         return fechasActualizacion;
     }
 
-    public void setFechasActualizacion(LocalDateTime fechasActualizacion) {
+    public void setFechaActualizacion(LocalDateTime fechasActualizacion) {
         this.fechasActualizacion = fechasActualizacion;
     }
 
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
     
+    
+
     
 }
