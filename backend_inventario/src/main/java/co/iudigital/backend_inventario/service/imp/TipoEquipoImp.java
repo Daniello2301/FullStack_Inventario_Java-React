@@ -20,6 +20,7 @@ import co.iudigital.backend_inventario.service.iface.ITipoService;
 @Service
 public class TipoEquipoImp implements ITipoService {
 
+
     @Autowired
     private ITipoRepository tipoRepository;
     
@@ -40,22 +41,11 @@ public class TipoEquipoImp implements ITipoService {
         }
         List<TipoEquiDto> tiposDto = new ArrayList<>();
 
-        for(TipoEquipo tipo: tiposEquipo)
-        {
-            TipoEquiDto tipoDto = new TipoEquiDto();
-            
-            tipoDto.setId(tipo.getId());
-            tipoDto.setNombre(tipo.getNombre());
-            tipoDto.setEstado(tipo.getEstado());
-            tipoDto.setFechaCreacion(tipo.getFechaCreacion());
-            tipoDto.setFechasActualizacion(tipo.getFechaActualizacion());
-
-            tiposDto.add(tipoDto);
-        }
-
         return tiposDto;
     }
 
+
+    
     @Override
     @Transactional(readOnly = true)
     public TipoEquiDto getById(Long id) throws RestException {
