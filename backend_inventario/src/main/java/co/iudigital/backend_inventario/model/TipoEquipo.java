@@ -37,6 +37,7 @@ public class TipoEquipo implements Serializable{
     @JoinColumn( name = "usuario_id")
     private Usuario usuario; 
 
+
     public Long getId() {
         return id;
     }

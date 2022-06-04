@@ -25,6 +25,7 @@ import co.iudigital.backend_inventario.service.iface.ITipoService;
 @Service
 public class TipoEquipoImp implements ITipoService {
 
+
     @Autowired
     private ITipoRepository tipoRepository;
     
@@ -57,6 +58,8 @@ public class TipoEquipoImp implements ITipoService {
         return tiposDto;
     }
 
+
+    
     @Override
     @Transactional(readOnly = true)
     public TipoEquiDto getById(Long id) throws RestException {

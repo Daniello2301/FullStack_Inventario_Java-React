@@ -13,7 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "equipos")
+@Table(name = "inventarios")
 public class Equipo implements Serializable{
     
     @Id
