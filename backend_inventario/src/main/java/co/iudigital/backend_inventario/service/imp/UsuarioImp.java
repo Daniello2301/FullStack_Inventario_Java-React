@@ -99,7 +99,17 @@ public class UsuarioImp implements IUsuarioService {
         LocalDateTime newDate = LocalDateTime.now();
         usuarioDto.setFechaActualizacion(newDate);
 
-        Usuario usuario = usuarioConverter.usuarioDTOToUsuario(usuarioDto);
+        Usuario usuario = usuarioRepository.getById( usuarioConverter.usuarioDTOToUsuario(usuarioDto).getId());
+
+        if(usuario  == null){
+            throw new NotFoundException(ErrorDto
+                    .getErrorDto(
+                        HttpStatus.NOT_FOUND.getReasonPhrase(), 
+                        "No se encontraron datos", 
+                        HttpStatus.NOT_FOUND.value()
+                        )
+                    );
+        }
 
         Usuario usuarioSave = usuarioRepository.save(usuario);
 
