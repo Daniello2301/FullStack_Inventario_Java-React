@@ -99,7 +99,7 @@ public class UsuarioImp implements IUsuarioService {
         LocalDateTime newDate = LocalDateTime.now();
         usuarioDto.setFechaActualizacion(newDate);
 
-        Usuario usuario = usuarioRepository.getById( usuarioConverter.usuarioDTOToUsuario(usuarioDto).getId());
+        Usuario usuario = usuarioRepository.findById(usuarioConverter.usuarioDTOToUsuario(usuarioDto).getId()).orElse(null);
 
         if(usuario  == null){
             throw new NotFoundException(ErrorDto
