@@ -175,6 +175,35 @@ public class EquipoImplement implements IEquipoService{
 
         return equipos;
     }
+
+
+
+    @Override
+    public EquipoDto update(EquipoDto equipoDto) throws RestException {
+        
+        LocalDateTime newDate = LocalDateTime.now();
+        equipoDto.setFechaActualizacion(newDate);
+        
+        Equipo equipo = equipoRepository.findById(equipoDto.getId()).orElse(null);
+
+        if(equipo == null){
+            throw new NotFoundException(ErrorDto
+                    .getErrorDto(
+                        HttpStatus.NOT_FOUND.getReasonPhrase(), 
+                        "No se encontraron datos", 
+                        HttpStatus.NOT_FOUND.value()
+                        )
+                    );
+        }
+
+        Equipo equipoCovertido = equipoConverter.EquipoDTOToEquipo(equipoDto);
+
+        Equipo equipoSave = equipoRepository.save(equipoCovertido);
+
+        equipoDto.setId(equipoSave.getId());
+
+        return equipoDto;
+    }
     
     
 }

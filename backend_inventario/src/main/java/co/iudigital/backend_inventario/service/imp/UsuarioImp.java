@@ -95,13 +95,16 @@ public class UsuarioImp implements IUsuarioService {
 
     @Override
     @Transactional
-    public UsuarioDto update(UsuarioDto usuarioDto) throws RestException {
+    public UsuarioDto update(Long id, UsuarioDto usuarioDto) throws RestException {
+        
         LocalDateTime newDate = LocalDateTime.now();
         usuarioDto.setFechaActualizacion(newDate);
 
-        Usuario usuario = usuarioRepository.findById(usuarioConverter.usuarioDTOToUsuario(usuarioDto).getId()).orElse(null);
+        Usuario usuarioFinded = usuarioRepository.findById(id).orElse(null);
 
-        if(usuario  == null){
+        Usuario usuarioConvertido = usuarioConverter.usuarioDTOToUsuario(usuarioDto);
+
+        if(usuarioFinded  == null){
             throw new NotFoundException(ErrorDto
                     .getErrorDto(
                         HttpStatus.NOT_FOUND.getReasonPhrase(), 
@@ -111,12 +114,12 @@ public class UsuarioImp implements IUsuarioService {
                     );
         }
 
-        Usuario usuarioSave = usuarioRepository.save(usuario);
+        Usuario usuarioSave = usuarioRepository.save(usuarioConvertido);
 
         usuarioDto.setId(usuarioSave.getId());
 
         return usuarioDto;
-    }
+    } 
 
 
     @Override

@@ -26,7 +26,7 @@ public class UsuarioDto {
         this.id = id;
     }
 
-    public String getNombre() {
+    public String getNombre() { 
         return nombre;
     }
 

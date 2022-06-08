@@ -21,7 +21,7 @@ public class UsuarioConverter {
         usuarioDTO.setFechaCreacion(usuario.getFechaCreacion());
         usuarioDTO.setFechaActualizacion(usuario.getFechaActualizacion());
 
-        return usuarioDTO;
+        return usuarioDTO; 
     }
 
 

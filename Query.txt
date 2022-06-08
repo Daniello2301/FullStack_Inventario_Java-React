@@ -2,7 +2,7 @@ create database Web_inventarios
 
 use web_inventarios;
 
-create table usuarios(
+create table usuarios if not exists(
 id int not null auto_increment,
 nombre varchar(255) not null,
 email varchar(255) not null,

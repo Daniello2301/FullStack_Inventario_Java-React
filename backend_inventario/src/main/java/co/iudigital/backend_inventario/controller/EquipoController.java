@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -136,6 +137,31 @@ public class EquipoController {
 
 
 
+    @PutMapping(consumes = "application/json")
+    @ResponseStatus
+    public ResponseEntity<EquipoDto> update(@RequestBody EquipoDto equipoDto) throws RestException
+    {
+        try 
+        {
+            EquipoDto response = equipoService.update(equipoDto);
+         
+         return new ResponseEntity<>(response, HttpStatus.OK);
+          
+        } catch (BadRequestException e) 
+        {
+            LOG.error("Error", e);
+            throw e; 
+        } catch (InternalServerErrorException e)
+        {
+            throw new InternalServerErrorException(
+                ErrorDto.getErrorDto(
+                    HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), 
+                    "Error interno en el servidor",
+                    HttpStatus.INTERNAL_SERVER_ERROR.value()
+                    )
+            ); 
+        }
+    }
 
 
 

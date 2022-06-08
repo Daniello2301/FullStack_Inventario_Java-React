@@ -25,5 +25,7 @@ public interface IEquipoService {
 
     public EquipoDto save(EquipoDto equipoDto) throws RestException;
 
+    public EquipoDto update(EquipoDto equipoDto) throws RestException;
+
     public void deleteById(long id);
 }

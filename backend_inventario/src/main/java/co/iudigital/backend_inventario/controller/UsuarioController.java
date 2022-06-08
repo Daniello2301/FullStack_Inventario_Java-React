@@ -88,13 +88,13 @@ public class UsuarioController {
     }
 
 
-    @PutMapping(consumes = "application/json")
+    @PutMapping("/{id}")  
     @ResponseStatus
-    public ResponseEntity<UsuarioDto> update(@RequestBody UsuarioDto usuarioDto) throws RestException
+    public ResponseEntity<UsuarioDto> update(@PathVariable Long id, @RequestBody UsuarioDto usuarioDto) throws RestException
     {
         try 
         {
-         UsuarioDto response = usuarioService.update(usuarioDto);
+         UsuarioDto response = usuarioService.update(id, usuarioDto);
          
          return new ResponseEntity<>(response, HttpStatus.OK);
           
@@ -113,7 +113,6 @@ public class UsuarioController {
             ); 
         }
     }
-
 
     @DeleteMapping("/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
