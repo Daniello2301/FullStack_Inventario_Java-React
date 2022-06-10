@@ -4,7 +4,7 @@ import './Sidebar.css';
 
 export function Sidebar() {
     return (
-        <div className="sidebar">
+        <div className="sidebar col col-sm-2">
             <ul>
                <Link to={`/inventarios`} className="link" > Inventarios </Link>
                <Link to={`/usuarios`} className="link" > Usuarios </Link>

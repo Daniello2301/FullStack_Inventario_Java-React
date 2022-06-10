@@ -1,7 +1,12 @@
+import {Navbar} from '../../components/navbar/Navbar';
+
 export function ListMarcas() {
     return (
-        <div>
-            <h1>Lista de Marcas</h1>
-        </div>
+        <>
+            <Navbar />
+            <div>
+                <h1>Lista de Marcas</h1>
+            </div>
+        </>
     )
 }
