@@ -19,7 +19,7 @@ export function Navbar(){
                         <Link to="/usuarios" className="nav-link">Usuarios</Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/estados" className="nav-link">Marcas</Link>
+                        <Link to="/marcas" className="nav-link">Marcas</Link>
                     </li>
                     <li className="nav-item">
                         <Link to="/tipos" className="nav-link">Tipos de Equipos</Link>

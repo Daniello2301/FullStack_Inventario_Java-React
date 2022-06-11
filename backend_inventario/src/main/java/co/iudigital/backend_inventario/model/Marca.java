@@ -33,7 +33,7 @@ public class Marca {
     private LocalDateTime fechaActualizacion;
 
     @ManyToOne
-    @JoinColumn(name ="usuario_id", nullable = false)
+    @JoinColumn(name ="usuario", nullable = false)
     private Usuario usuario;
 
 

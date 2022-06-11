@@ -34,7 +34,7 @@ public class TipoEquipo implements Serializable{
     private LocalDateTime fechaActualizacion;
 
     @ManyToOne
-    @JoinColumn( name = "usuario_id")
+    @JoinColumn( name = "usuario")
     private Usuario usuario; 
 
 

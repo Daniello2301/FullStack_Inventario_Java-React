@@ -36,19 +36,19 @@ public class Equipo implements Serializable{
     private LocalDateTime fechaCompra;
 
     @OneToOne
-    @JoinColumn(name = "usuario_id")
+    @JoinColumn(name = "usuario")
     private Usuario usuario;
 
     @OneToOne
-    @JoinColumn(name = "marca_id")
+    @JoinColumn(name = "marca")
     private Marca marca;
 
     @OneToOne
-    @JoinColumn(name = "tipo_id")
+    @JoinColumn(name = "tipo_equipo")
     private TipoEquipo tipoEquipo;
 
     @OneToOne
-    @JoinColumn(name = "estado_id")
+    @JoinColumn(name = "estado_equipo")
     private EstadoEquipo estadoEquipo;
  
     @Column(name = "fecha_creacion")
