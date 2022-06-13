@@ -9,7 +9,7 @@ header{
 main{
     height: auto;
     width: calc(100vw - 310px);
-    height:calc(100vh - 100px);
+    height:calc(100vh - 170px);
     margin-left: 310px;
     display: grid;
     place-items: center;

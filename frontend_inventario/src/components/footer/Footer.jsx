@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 export function Footer(){
     return (
         <>
-            <div className="footer  position-absolute" >
+            <div className="footer position-absolute bottom-0" >
                 <div className="redes" >
                     <a href=''><FaGithub/></a>
                     <a href=''><FaFacebook/></a>

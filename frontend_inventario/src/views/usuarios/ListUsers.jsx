@@ -51,7 +51,6 @@ export function ListUsers(){
                     </div>
                 </div>
             </div>
-            <Footer />
         </>
     )
 }
