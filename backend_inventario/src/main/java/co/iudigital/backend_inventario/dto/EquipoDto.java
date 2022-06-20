@@ -1,5 +1,6 @@
 package co.iudigital.backend_inventario.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -25,7 +26,7 @@ public class EquipoDto {
 
     private String estado;
 
-    private LocalDateTime fechaCompra;
+    private LocalDate fechaCompra;
 
     @JsonProperty("usuario")
     private Usuario usuario;
@@ -100,11 +101,11 @@ public class EquipoDto {
         this.estado = estado;
     }
 
-    public LocalDateTime getFechaCompra() {
+    public LocalDate getFechaCompra() {
         return fechaCompra;
     }
 
-    public void setFechaCompra(LocalDateTime fechaCompra) {
+    public void setFechaCompra(LocalDate fechaCompra) {
         this.fechaCompra = fechaCompra;
     }
 

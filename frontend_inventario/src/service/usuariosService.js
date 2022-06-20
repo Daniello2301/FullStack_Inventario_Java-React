@@ -47,7 +47,11 @@ export async function deleteByIdUsuario(id){
     try 
     {
         const response = await fetch(API_URL + '/' + id, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+
         });
         const data = await response.json();
         return data;

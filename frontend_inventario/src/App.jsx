@@ -24,7 +24,7 @@ export function App() {
         <Route path="/tipos" element={ <ListTiposEquipos/> } />
         <Route path="/tipos/crear" element={ <CrearTipo/> } />
         <Route path="/estados" element={ <ListEstadosEquipos/> } />
-        <Route path="/estados/crear" element={ <CrearTipo/> } />
+        <Route path="/estados/crear" element={ <CrearEstado/> } />
         <Route path="/marcas" element={ <ListMarcas/> } />
         <Route path="/marcas/crear" element={ <CrearMarca/> } />
         <Route path="/inventarios" element={ <ListInventarios/> } />

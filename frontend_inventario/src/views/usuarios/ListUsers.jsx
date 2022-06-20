@@ -1,22 +1,81 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
-
+import React from "react";
 import { useState, useEffect } from "react";
-
+import { Link } from "react-router-dom";
+import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaPlusCircle } from "react-icons/fa";
 import { Navbar } from "../../components/navbar/Navbar"
 import { UserItem } from '../../components/userItem.jsx/UserItem';
-import { Footer } from "../../components/footer/Footer"
 import * as API from '../../service/usuariosService';
+import Swal from "sweetalert2";
+import 'sweetalert2/src/sweetalert2.scss';
 
 export function ListUsers(){
 
     const [usuarios, setUsuarios] = useState([]);
 
-    useEffect(() => {
+    const getAllUsuarios = async () => {
+        try {
+            Swal.fire({
+                title: 'Cargando...',
+                text: 'Espere un momento',
+                showConfirmButton: false,
+                timer: 1000,
+            })
+            Swal.showLoading();
             API.getAllUsuarios()
-                .then(setUsuarios)
-                .catch(console.log);
-        },[]);
+            .then(data => {setUsuarios(data)
+            console.log(data)
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        getAllUsuarios();
+    }, []);
+
+    const handleDelete = (id) => {
+        try {
+            Swal.fire({
+                title: '¿Estas seguro?',
+                text: "No podras revertir esto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, eliminar!'
+            }).then((result) => {
+                if (result.value) {                  
+                    API.deleteByIdUsuario(id)
+                        .then(data => {
+                            if(!data){
+                                Swal.fire({
+                                    title:'Eliminado!',
+                                    text:'El usuario ha sido eliminado',
+                                    icon:'success',
+                                    timer:300,
+                                })
+                                getAllUsuarios();
+                            }else{
+                                Swal.fire(
+                                    'Error!',
+                                    data.error,
+                                    'error'
+                                )  
+                            }
+                            console.log(data)
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
+                }
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 
     return(
         <>
@@ -42,7 +101,7 @@ export function ListUsers(){
                                 <>
                                     {
                                         usuarios.map(usuario => (
-                                            <UserItem key={usuario.id} {...usuario} />
+                                            <UserItem key={usuario.id} {...usuario} handleDelete={handleDelete} />
                                         ))
                                     }
                                 </>
@@ -51,6 +110,7 @@ export function ListUsers(){
                     </div>
                 </div>
             </div>
+            <Link to='/usuarios/crear' className="btn position-absolute bottom-0 end-0 fs-1 my-5 mx-5" > <FaPlusCircle /> </Link>
         </>
     )
 }

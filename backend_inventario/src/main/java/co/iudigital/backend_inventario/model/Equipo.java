@@ -1,6 +1,7 @@
 package co.iudigital.backend_inventario.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -33,7 +34,7 @@ public class Equipo implements Serializable{
     private String estado;
 
     @Column(name = "fecha_compra")
-    private LocalDateTime fechaCompra;
+    private LocalDate fechaCompra;
 
     @OneToOne
     @JoinColumn(name = "usuario")
@@ -113,11 +114,11 @@ public class Equipo implements Serializable{
         this.estado = estado;
     }
 
-    public LocalDateTime getFechaCompra() {
+    public LocalDate getFechaCompra() {
         return fechaCompra;
     }
 
-    public void setFechaCompra(LocalDateTime fechaCompra) {
+    public void setFechaCompra(LocalDate fechaCompra) {
         this.fechaCompra = fechaCompra;
     }
 
